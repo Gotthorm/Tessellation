@@ -183,7 +183,7 @@ LRESULT CALLBACK WindowProcedure( HWND hWindow, UINT nMessage, WPARAM wParam, LP
 	{
 	case WM_PAINT:
 		//hDeviceContext = BeginPaint( hWindow, &thePaintStructure );
-		//g_Framework.Render();
+		g_Framework.Render();
 		ValidateRect( hWindow, NULL );
 		break;
 	case WM_DESTROY:
