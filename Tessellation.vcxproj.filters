@@ -45,7 +45,7 @@
     <ClCompile Include="Text2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\File.cpp">
+    <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +80,7 @@
     <ClInclude Include="Text2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\File.hpp">
+    <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,6 +95,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Media\Shaders\tessellation.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\text2d.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\text2d.vs.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

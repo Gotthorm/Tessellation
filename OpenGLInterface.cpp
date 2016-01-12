@@ -48,6 +48,9 @@ PFNGLUNIFORM1IPROC OpenGLInterface::Uniform1i = NULL;
 PFNGLDRAWARRAYSINSTANCEDPROC OpenGLInterface::DrawArraysInstanced = NULL;
 PFNGLPATCHPARAMETERIPROC OpenGLInterface::PatchParameteri = NULL;
 PFNGLGETSHADERIVPROC OpenGLInterface::GetShaderiv = NULL;
+PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC OpenGLInterface::CompressedTexSubImage1D = NULL;
+PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC OpenGLInterface::CompressedTexSubImage2D = NULL;
+PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC OpenGLInterface::CompressedTexSubImage3D = NULL;
 
 PFNGLBUFFERDATAPROC OpenGLInterface::BufferData = NULL;
 //PFNGLDRAWARRAYSPROC OpenGLInterface::DrawArrays = NULL;
@@ -100,7 +103,10 @@ bool OpenGLInterface::Initialize()
 	Uniform1i = (PFNGLUNIFORM1IPROC)GetOpenGLFunctionAddress( "glUniform1i" );
 	DrawArraysInstanced = (PFNGLDRAWARRAYSINSTANCEDPROC)GetOpenGLFunctionAddress("glDrawArraysInstanced");
 	PatchParameteri = (PFNGLPATCHPARAMETERIPROC)GetOpenGLFunctionAddress("glPatchParameteri");
-	GetShaderiv = (PFNGLGETSHADERIVPROC)GetOpenGLFunctionAddress( "glGetShaderiv" );
+	GetShaderiv = (PFNGLGETSHADERIVPROC)GetOpenGLFunctionAddress("glGetShaderiv" );
+	CompressedTexSubImage1D = (PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC)GetOpenGLFunctionAddress("glCompressedTexSubImage1D");
+	CompressedTexSubImage2D = (PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC)GetOpenGLFunctionAddress("glCompressedTexSubImage2D");
+	CompressedTexSubImage3D = (PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC)GetOpenGLFunctionAddress("glCompressedTexSubImage3D");
 
 	//DrawArrays = (PFNGLDRAWARRAYSPROC)GetOpenGLFunctionAddress("glDrawArrays");
 

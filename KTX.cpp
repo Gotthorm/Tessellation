@@ -31,9 +31,6 @@
 #include <cstdlib>
 #include <cstring>
 
-// #include <sb7.h>
-
-//#include "GL/gl3w.h"
 #include "OpenGLInterface.h"
 
 namespace KTX

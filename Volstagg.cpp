@@ -39,9 +39,9 @@ bool Volstagg::Load(const std::string& filename)
 	{
 		OpenGLInterface::PatchParameteri( GL_PATCH_VERTICES, 4 );
 
-		tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
-		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
-		tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
+		//tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
+		//OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
+		//tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
 
 		return true;
 	}

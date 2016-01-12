@@ -55,6 +55,9 @@ struct OpenGLInterface
 	static PFNGLDRAWARRAYSINSTANCEDPROC DrawArraysInstanced;
 	static PFNGLPATCHPARAMETERIPROC PatchParameteri;
 	static PFNGLGETSHADERIVPROC GetShaderiv;
+	static PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC CompressedTexSubImage1D;
+	static PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC CompressedTexSubImage2D;
+	static PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC CompressedTexSubImage3D;
 
 	//typedef void (APIENTRY* PFNGLBUFFERDATAPROC)(GLenum, GLuint, const GLvoid *, GLenum);
 	static PFNGLBUFFERDATAPROC BufferData;

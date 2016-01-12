@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <TCHAR.H>
 #include "Framework.h"
-//#include <GL/gl.h>
-//#include <GL/glu.h>
 #include "Input.h"
 #include <sstream>
 #include <iostream>
@@ -130,14 +128,14 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	m_UpdateAccumulator = 0;
 	m_CurrentFPS = 0;
 
-	// Initialize the 2D text system
-	m_Text2D.init(128, 50);
-
 	ResizeWindow(width, height);
 
 	m_Volstagg.Load( "do nothing" );
 
-    return true;
+	// Initialize the 2D text system
+	m_Text2D.init( 128, 50 );
+	
+	return true;
 }
 
 void Framework::Shutdown()
@@ -210,6 +208,7 @@ void Framework::Update()
 
 	m_Volstagg.Render( projectionMatrix, viewMatrix );
 
+#if 1
 	glPolygonMode(GL_FRONT, GL_FILL);
 
 	std::stringstream s;
@@ -219,6 +218,7 @@ void Framework::Update()
 	m_Text2D.drawText(s.str().c_str(), 0, 0);
 
 	m_Text2D.draw();
+#endif
 
 	SwapBuffers(m_WindowHandleToDeviceContext);
 

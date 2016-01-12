@@ -88,6 +88,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -117,6 +118,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Common\File.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KTX.cpp" />
@@ -152,11 +153,11 @@
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Text2D.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Volstagg.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Common\File.hpp" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="Heimdall.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Text2D.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Volstagg.h" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +175,8 @@
     <None Include="Media\Shaders\tessellation.tcs.glsl" />
     <None Include="Media\Shaders\tessellation.tes.glsl" />
     <None Include="Media\Shaders\tessellation.vs.glsl" />
+    <None Include="Media\Shaders\text2d.fs.glsl" />
+    <None Include="Media\Shaders\text2d.vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
