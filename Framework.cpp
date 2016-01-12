@@ -366,7 +366,7 @@ void Framework::Update()
 #endif
 
 #if 1
-	static const GLfloat black[] = { 0.85f, 0.95f, 1.0f, 1.0f };
+	static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static const GLfloat one = 1.0f;
 	//static bool wireframe = true;
 	//static bool enable_fog = true;
@@ -498,9 +498,9 @@ void Framework::Update()
 	m_Text2D.drawText(s.str().c_str(), 0, 0);
 	//m_Text2D.drawText("This is a test", 0, 0);
 
-	OutputDebugStringA( s.str().c_str() );
-	OutputDebugStringA( "\n" );
-	//m_Text2D.draw();
+	//OutputDebugStringA( s.str().c_str() );
+	//OutputDebugStringA( "\n" );
+	m_Text2D.draw();
 #endif
 
 	SwapBuffers(m_WindowHandleToDeviceContext);

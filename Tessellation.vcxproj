@@ -193,6 +193,12 @@
     <ClInclude Include="vmath.h" />
     <ClInclude Include="Volstagg.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Media\Shaders\tessellation.fs.glsl" />
+    <None Include="Media\Shaders\tessellation.tcs.glsl" />
+    <None Include="Media\Shaders\tessellation.tes.glsl" />
+    <None Include="Media\Shaders\tessellation.vs.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

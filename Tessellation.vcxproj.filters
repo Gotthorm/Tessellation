@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{f9c91718-ad13-4db7-bc7c-29bb0d09ffb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -155,5 +158,19 @@
     <ClInclude Include="Common\Matrix3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Media\Shaders\tessellation.tcs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\tessellation.tes.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\tessellation.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\tessellation.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
