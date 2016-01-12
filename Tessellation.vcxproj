@@ -153,7 +153,6 @@
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Text2D.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Volstagg.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
@@ -167,7 +166,6 @@
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Text2D.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Volstagg.h" />
   </ItemGroup>
   <ItemGroup>

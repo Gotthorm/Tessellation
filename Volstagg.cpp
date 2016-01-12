@@ -5,7 +5,7 @@
 #include "Volstagg.h"
 #include <stdio.h>
 #include "KTX.h"
-#include "glm/gtc/type_ptr.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 const std::string shaderName( "tessellation" );
 

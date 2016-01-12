@@ -5,7 +5,7 @@
 
 #include <string>
 #include <gl\GL.h>
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 #include "Shader.h"
 
 class RenderObject
