@@ -145,52 +145,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Common\File.cpp" />
-    <ClCompile Include="Common\Math.cpp" />
-    <ClCompile Include="Common\Matrix3.cpp" />
-    <ClCompile Include="Common\Matrix4.cpp" />
-    <ClCompile Include="Common\Vector3.cpp" />
-    <ClCompile Include="Common\Vector4.cpp" />
     <ClCompile Include="Framework.cpp" />
-    <ClCompile Include="HeightMap.cpp" />
-    <ClCompile Include="Heimdall.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KTX.cpp" />
-    <ClCompile Include="Landscape.cpp" />
-    <ClCompile Include="Loki.cpp" />
     <ClCompile Include="OpenGLInterface.cpp" />
-    <ClCompile Include="Patch.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Text2D.cpp" />
-    <ClCompile Include="Thor.cpp" />
     <ClCompile Include="Volstagg.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
     <ClInclude Include="Common\File.hpp" />
-    <ClInclude Include="Common\Math.hpp" />
-    <ClInclude Include="Common\Matrix3.hpp" />
-    <ClInclude Include="Common\Matrix4.hpp" />
-    <ClInclude Include="Common\Vector3.hpp" />
-    <ClInclude Include="Common\Vector4.hpp" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="glext.h" />
-    <ClInclude Include="HeightMap.hpp" />
     <ClInclude Include="Heimdall.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KTX.h" />
-    <ClInclude Include="Landscape.h" />
-    <ClInclude Include="Landscape.hpp" />
-    <ClInclude Include="Loki.h" />
     <ClInclude Include="OpenGLInterface.h" />
-    <ClInclude Include="Patch.hpp" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Text2D.h" />
-    <ClInclude Include="Thor.h" />
-    <ClInclude Include="TreeNode.hpp" />
-    <ClInclude Include="vmath.h" />
     <ClInclude Include="Volstagg.h" />
   </ItemGroup>
   <ItemGroup>

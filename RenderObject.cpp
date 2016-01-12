@@ -6,7 +6,8 @@
 
 RenderObject::RenderObject() : m_DataBuffer(0), m_VertexArrayObject(0), m_ObjectCount(0), m_Initialized(false)
 {
-	m_Orientation = Matrix4::IDENTITY;
+	// Identity matrix
+	m_Orientation = glm::mat4();
 }
 
 RenderObject::~RenderObject()
@@ -49,7 +50,7 @@ bool RenderObject::InitializeUniformVariable( const char* variableName, GLint& v
 	return false;
 }
 
-void RenderObject::UpdateUniformVariables(const Matrix4& projectionMatrix, const Matrix4& viewMatrix)
+void RenderObject::UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 {
 }
 
@@ -62,7 +63,7 @@ void RenderObject::Destroy()
 	m_DataBuffer = 0;
 }
 
-void RenderObject::Render(const Matrix4& projectionMatrix, const Matrix4& viewMatrix)
+void RenderObject::Render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 {
 	if (m_Initialized && m_Shader.Use())
 	{

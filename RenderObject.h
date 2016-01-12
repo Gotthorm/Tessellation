@@ -3,14 +3,15 @@
 #ifndef __RENDEROBJECT_H__
 #define __RENDEROBJECT_H__
 
-#include "Common/Matrix4.hpp"
-#include "Shader.h"
 #include <string>
+#include <gl\GL.h>
+#include "glm/glm.hpp"
+#include "Shader.h"
 
 class RenderObject
 {
 public:
-	void Render(const Matrix4& projectionMatrix, const Matrix4& viewMatrix);
+	void Render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
 
 	virtual bool Load(const std::string& filename) = 0;
 
@@ -28,7 +29,7 @@ protected:
 	bool InitializeUniformVariable( const char* variableName, GLint& variableId );
 
 	// Derived objects should update the values of all uniform variables here
-	virtual void UpdateUniformVariables(const Matrix4& projectionMatrix, const Matrix4& viewMatrix);
+	virtual void UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
 
 	// Derived objects can override the default GL_TRIANGLES render call with the appropiate functionality
 	virtual void Draw();
@@ -39,7 +40,7 @@ protected:
 
 	bool m_Initialized;
 
-	Matrix4 m_Orientation;
+	glm::mat4 m_Orientation;
 	Shader m_Shader;
 };
 

@@ -4,7 +4,6 @@
 #define __VOLSTAGG_H__
 
 #include "RenderObject.h"
-#include "vmath.h"
 
 class Volstagg : public RenderObject
 {
@@ -16,18 +15,15 @@ public:
 
 private:
 	virtual bool InitializeAllUniformVariables();
-	virtual void UpdateUniformVariables(const Matrix4& projectionMatrix, const Matrix4& viewMatrix);
+	virtual void UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
 	virtual void Draw();
 
-	//GLint m_UniformModelMatrix;
-	//GLint m_UniformViewMatrix;
 	GLint m_UniformModelViewMatrix;
 	GLint m_UniformModelViewPointMatrix;
 	GLint m_UniformProjectionMatrix;
-	//GLint m_FinalMatrix;
 
-	GLuint          tex_displacement;
-	GLuint          tex_color;
+	GLuint tex_displacement;
+	GLuint tex_color;
 };
 
 #endif /* __VOLSTAGG_H__ */
