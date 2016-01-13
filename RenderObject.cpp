@@ -6,8 +6,6 @@
 
 RenderObject::RenderObject() : m_DataBuffer(0), m_VertexArrayObject(0), m_ObjectCount(0), m_Initialized(false)
 {
-	// Identity matrix
-	m_Orientation = glm::mat4();
 }
 
 RenderObject::~RenderObject()

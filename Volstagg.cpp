@@ -5,6 +5,7 @@
 #include "Volstagg.h"
 #include <stdio.h>
 #include "KTX.h"
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 const std::string shaderName( "tessellation" );
@@ -19,8 +20,13 @@ Volstagg::~Volstagg()
 
 bool Volstagg::InitializeAllUniformVariables()
 {
-	if( InitializeUniformVariable( "mv_matrix", m_UniformModelViewMatrix ) && InitializeUniformVariable( "proj_matrix", m_UniformProjectionMatrix ) )
+	if( InitializeUniformVariable( "model_matrix", m_UniformModelMatrix ) && 
+		InitializeUniformVariable( "view_matrix", m_UniformViewMatrix ) &&
+		InitializeUniformVariable( "projection_matrix", m_UniformProjectionMatrix ) )
 	{ 
+		// Identity matrix
+		m_Orientation = glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0));
+
 		return true;
 	}
 
@@ -29,8 +35,10 @@ bool Volstagg::InitializeAllUniformVariables()
 
 void Volstagg::UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 {
-	OpenGLInterface::UniformMatrix4fv(m_UniformModelViewMatrix, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-	OpenGLInterface::UniformMatrix4fv(m_UniformProjectionMatrix, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	OpenGLInterface::UniformMatrix4fv( m_UniformViewMatrix, 1, GL_FALSE, glm::value_ptr( viewMatrix ) );
+	OpenGLInterface::UniformMatrix4fv( m_UniformProjectionMatrix, 1, GL_FALSE, glm::value_ptr( projectionMatrix ) );
+
+	OpenGLInterface::UniformMatrix4fv( m_UniformModelMatrix, 1, GL_FALSE, glm::value_ptr( m_Orientation ) );
 }
 
 bool Volstagg::Load(const std::string& filename)
@@ -55,5 +63,5 @@ void Volstagg::Draw()
 	glDepthFunc( GL_LEQUAL );
 	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
-	OpenGLInterface::DrawArraysInstanced( GL_PATCHES, 0, 4, 64 );
+	OpenGLInterface::DrawArraysInstanced( GL_PATCHES, 0, 4, 4096 );
 }

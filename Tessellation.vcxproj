@@ -149,6 +149,7 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KTX.cpp" />
+    <ClCompile Include="Loki.cpp" />
     <ClCompile Include="OpenGLInterface.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Heimdall.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KTX.h" />
+    <ClInclude Include="Loki.h" />
     <ClInclude Include="OpenGLInterface.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
@@ -169,6 +171,8 @@
     <ClInclude Include="Volstagg.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Media\Shaders\render.fs.glsl" />
+    <None Include="Media\Shaders\render.vs.glsl" />
     <None Include="Media\Shaders\tessellation.fs.glsl" />
     <None Include="Media\Shaders\tessellation.tcs.glsl" />
     <None Include="Media\Shaders\tessellation.tes.glsl" />

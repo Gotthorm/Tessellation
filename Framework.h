@@ -5,6 +5,7 @@
 
 #include <windows.h>
 #include "Volstagg.h"
+#include "Loki.h"
 #include <gl\GL.h>
 #include "Text2D.h"
 
@@ -67,6 +68,7 @@ private:
 	Text2D m_Text2D;
 
 	Volstagg m_Volstagg;
+	Loki m_Loki;
 
 	struct
 	{

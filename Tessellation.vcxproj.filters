@@ -45,6 +45,9 @@
     <ClCompile Include="Text2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Loki.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -77,6 +80,9 @@
     <ClInclude Include="Text2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Loki.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Media\Shaders\tessellation.tcs.glsl">
@@ -95,6 +101,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Media\Shaders\text2d.vs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\render.fs.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Media\Shaders\render.vs.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

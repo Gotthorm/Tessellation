@@ -102,13 +102,13 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 
 	m_CameraPosition = m_PlayerPosition = glm::vec3();
 
-	m_CameraOrientation = m_PlayerOrientation = glm::vec3(0,0,-1);
+	m_CameraOrientation = m_PlayerOrientation = glm::vec3(0,0,1);
 
 	//m_CameraPosition = Vector3(0, 0, 100);
-	m_CameraPosition = glm::vec3( 0.0f, 0.0f, -1.0f );
+	m_CameraPosition = glm::vec3( 0.0f, 40.f, 300.0f );
 
 	m_CameraTargetPitch = m_CameraCurrentPitch = 0.0f;
-	m_CameraTargetYaw = 0.0F;
+	m_CameraTargetYaw = 0.0f;
 	m_CameraCurrentYaw = 180.0f;
 
 	m_FOVX = 45.0f;
@@ -131,6 +131,7 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	ResizeWindow(width, height);
 
 	m_Volstagg.Load( "do nothing" );
+	m_Loki.Load( "Media/Objects/cube.sbm" );
 
 	// Initialize the 2D text system
 	m_Text2D.init( 128, 50 );
@@ -198,15 +199,19 @@ void Framework::Update()
 	//static bool enable_fog = true;
 	static bool enable_displacement = true;
 
-	glm::mat4 viewMatrix = glm::lookAt( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3(0,1,0) );
+	//glm::mat4 viewMatrix = glm::lookAt( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3(0,1,0) );
+	glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3( 0, -1, 0 ) );
+	//glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, glm::vec3( 0, 0, 0 ), glm::vec3( 0, -1, 0 ) );
 
-	glm::mat4 projectionMatrix = glm::perspective( 60.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
+	//glm::mat4 projectionMatrix = glm::perspective( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
+	glm::mat4 projectionMatrix = glm::perspectiveLH( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
 
 	glViewport( 0, 0, windowWidth, windowHeight );
 	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, black );
 	OpenGLInterface::ClearBufferfv( GL_DEPTH, 0, &one );
 
 	m_Volstagg.Render( projectionMatrix, viewMatrix );
+	m_Loki.Render( projectionMatrix, viewMatrix );
 
 #if 1
 	glPolygonMode(GL_FRONT, GL_FILL);
@@ -260,17 +265,20 @@ void Framework::UpdateCamera(DWORD timeElapsed)
 
 		m_CameraTargetPitch = m_CameraTargetYaw = 0.0f;
 
-		//glm::mat3 theYawMatrix = glm::rotate( glm::mat3(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, 1.0, 0 ) );
-		//glm::mat3 thePitchMatrix( glm::vec3(1.0,0,0), glm::radians( m_CameraCurrentPitch ) );
-		//glm::vec3 theUpVector = thePitchMatrix * glm::vec3(0,1,0);
-		glm::mat3 theYawMatrix = glm::mat3();
-		glm::mat3 thePitchMatrix = glm::mat3();
-		glm::vec3 theUpVector = glm::vec3(0,1,0);
+		glm::mat4 theYawMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, -1.0, 0 ) );
+		glm::mat4 thePitchMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentPitch ), glm::vec3( 1.0, 0, 0 ) );
+		glm::vec4 theUpVector = thePitchMatrix * glm::vec4(0,1,0,1);
+		//glm::mat3 theYawMatrix = glm::mat3();
+		//glm::mat3 thePitchMatrix = glm::mat3();
+		//glm::vec3 theUpVector = glm::vec3(0,1,0);
 
-		glm::vec3 orientationVector = (theYawMatrix * thePitchMatrix) * glm::vec3(0,0,1);
-		m_CameraOrientation = orientationVector;
+		glm::vec4 orientationVector = (theYawMatrix * thePitchMatrix) * glm::vec4(0,0,1,1);
 
-		glm::vec3 rightVector = glm::cross( orientationVector, theUpVector );
+		m_CameraOrientation.x = orientationVector.x;
+		m_CameraOrientation.y = orientationVector.y;
+		m_CameraOrientation.z = orientationVector.z;
+
+		glm::vec3 rightVector = glm::cross( m_CameraOrientation, glm::vec3( theUpVector.x, theUpVector.y, theUpVector.z ) );
 
 		// 10 units per second
 		float MovementIncrement = 100.0f * (timeElapsed / 1000.0f);
@@ -289,12 +297,12 @@ void Framework::UpdateCamera(DWORD timeElapsed)
 		if (m_pInput->GetKey(Input::KEY_A))
 		{
 			//camera->ProcessKeyboard(LEFT, deltaTime);
-			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
+			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
 		}
 		else if (m_pInput->GetKey(Input::KEY_D))
 		{
 			//camera->ProcessKeyboard(RIGHT, deltaTime);
-			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
+			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
 		}
 	}
 }

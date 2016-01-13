@@ -1,15 +1,15 @@
-// HEIMDALL.H
+// LOKI.H
 
-#ifndef __VOLSTAGG_H__
-#define __VOLSTAGG_H__
+#ifndef __LOKI_H__
+#define __LOKI_H__
 
 #include "RenderObject.h"
 
-class Volstagg : public RenderObject
+class Loki : public RenderObject
 {
 public:
-	Volstagg();
-    virtual ~Volstagg();
+	Loki();
+    virtual ~Loki();
 
     bool Load(const std::string& filename);
 
@@ -21,10 +21,7 @@ private:
 	GLint m_UniformModelMatrix;
 	GLint m_UniformViewMatrix;
 	GLint m_UniformProjectionMatrix;
-
-	GLuint tex_displacement;
-	GLuint tex_color;
 };
 
-#endif /* __VOLSTAGG_H__ */
+#endif /* __LOKI_H__ */
 
