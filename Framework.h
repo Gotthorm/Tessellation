@@ -83,7 +83,7 @@ private:
 	int windowHeight;
 	float dmap_depth;
 	Shader m_Shader;
-	GLuint tex_displacement;
+	//GLuint tex_displacement;
 	GLuint tex_color;
 };
 

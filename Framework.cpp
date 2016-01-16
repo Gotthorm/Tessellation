@@ -105,11 +105,11 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	m_CameraOrientation = m_PlayerOrientation = glm::vec3(0,0,1);
 
 	//m_CameraPosition = Vector3(0, 0, 100);
-	m_CameraPosition = glm::vec3( 0.0f, 40.f, 300.0f );
+	m_CameraPosition = glm::vec3( 0.0f, 30.f, 0.0f );
 
 	m_CameraTargetPitch = m_CameraCurrentPitch = 0.0f;
 	m_CameraTargetYaw = 0.0f;
-	m_CameraCurrentYaw = 180.0f;
+	m_CameraCurrentYaw = 0.0f;
 
 	m_FOVX = 45.0f;
 
@@ -134,7 +134,7 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	m_Loki.Load( "Media/Objects/cube.sbm" );
 
 	// Initialize the 2D text system
-	m_Text2D.init( 128, 50 );
+	//m_Text2D.init( 128, 50 );
 	
 	return true;
 }
@@ -147,7 +147,7 @@ void Framework::Shutdown()
 		delete m_pInput;
 		m_pInput = NULL;
 	}
-	m_Text2D.Shutdown();
+	//m_Text2D.Shutdown();
 }
 
 void Framework::Update()
@@ -199,12 +199,12 @@ void Framework::Update()
 	//static bool enable_fog = true;
 	static bool enable_displacement = true;
 
-	//glm::mat4 viewMatrix = glm::lookAt( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3(0,1,0) );
-	glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3( 0, -1, 0 ) );
+	glm::mat4 viewMatrix = glm::lookAt( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3(0,1,0) );
+	//glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3( 0, -1, 0 ) );
 	//glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, glm::vec3( 0, 0, 0 ), glm::vec3( 0, -1, 0 ) );
 
-	//glm::mat4 projectionMatrix = glm::perspective( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
-	glm::mat4 projectionMatrix = glm::perspectiveLH( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
+	glm::mat4 projectionMatrix = glm::perspective( 45.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
+	//glm::mat4 projectionMatrix = glm::perspectiveLH( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
 
 	glViewport( 0, 0, windowWidth, windowHeight );
 	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, black );
@@ -213,7 +213,7 @@ void Framework::Update()
 	m_Volstagg.Render( projectionMatrix, viewMatrix );
 	m_Loki.Render( projectionMatrix, viewMatrix );
 
-#if 1
+#if 0
 	glPolygonMode(GL_FRONT, GL_FILL);
 
 	std::stringstream s;
@@ -265,7 +265,7 @@ void Framework::UpdateCamera(DWORD timeElapsed)
 
 		m_CameraTargetPitch = m_CameraTargetYaw = 0.0f;
 
-		glm::mat4 theYawMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, -1.0, 0 ) );
+		glm::mat4 theYawMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, 1.0, 0 ) );
 		glm::mat4 thePitchMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentPitch ), glm::vec3( 1.0, 0, 0 ) );
 		glm::vec4 theUpVector = thePitchMatrix * glm::vec4(0,1,0,1);
 		//glm::mat3 theYawMatrix = glm::mat3();
@@ -297,12 +297,12 @@ void Framework::UpdateCamera(DWORD timeElapsed)
 		if (m_pInput->GetKey(Input::KEY_A))
 		{
 			//camera->ProcessKeyboard(LEFT, deltaTime);
-			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
+			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
 		}
 		else if (m_pInput->GetKey(Input::KEY_D))
 		{
 			//camera->ProcessKeyboard(RIGHT, deltaTime);
-			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
+			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
 		}
 	}
 }

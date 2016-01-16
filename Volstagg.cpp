@@ -47,9 +47,9 @@ bool Volstagg::Load(const std::string& filename)
 	{
 		OpenGLInterface::PatchParameteri( GL_PATCH_VERTICES, 4 );
 
-		//tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
-		//OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
-		//tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
+		tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
+		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
+		tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
 
 		return true;
 	}
@@ -59,9 +59,12 @@ bool Volstagg::Load(const std::string& filename)
 
 void Volstagg::Draw()
 {
+	// Set OpenGl to use counter clockwise triangles
+	glFrontFace(GL_CW);
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
-	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	glEnable( GL_CULL_FACE );
 
 	OpenGLInterface::DrawArraysInstanced( GL_PATCHES, 0, 4, 4096 );
 }

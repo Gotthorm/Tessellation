@@ -28,7 +28,7 @@ private:
 	GLint m_UniformProjectionMatrix;
 	//GLint m_FinalMatrix;
 
-	GLuint          tex_displacement;
+	//GLuint          tex_displacement;
 	GLuint          tex_color;
 };
 
