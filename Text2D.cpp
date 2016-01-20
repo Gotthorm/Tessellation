@@ -25,6 +25,7 @@ void Text2D::init(int width, int height, const char* font)
 	OpenGLInterface::BindVertexArray(vao);
 
 	// glCreateTextures(GL_TEXTURE_2D, 1, &text_buffer);
+	OpenGLInterface::ActiveTexture( GL_TEXTURE0 );
 	glGenTextures(1, &text_buffer);
 	glBindTexture(GL_TEXTURE_2D, text_buffer);
 	OpenGLInterface::TexStorage2D(GL_TEXTURE_2D, 1, GL_R8UI, width, height);

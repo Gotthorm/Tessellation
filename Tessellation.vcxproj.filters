@@ -48,6 +48,9 @@
     <ClCompile Include="Loki.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PNG.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Loki.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PNG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

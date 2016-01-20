@@ -5,6 +5,7 @@
 #include "Volstagg.h"
 #include <stdio.h>
 #include "KTX.h"
+#include "PNG.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -49,7 +50,8 @@ bool Volstagg::Load(const std::string& filename)
 
 		tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
 		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
-		tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
+		//tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
+		tex_color = PNG::load( "Media/Textures/Rock.png" );
 
 		return true;
 	}
