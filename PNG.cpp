@@ -104,6 +104,9 @@ bool loadPngImage( const char *name, int &outWidth, int &outHeight, bool &outHas
 	outWidth = width;
 	outHeight = height;
 
+	// A simple test for alpha.  This only works for images with a seperated alpha channel 
+	outHasAlpha = ( color_type == PNG_COLOR_TYPE_RGBA || color_type == PNG_COLOR_TYPE_GA );
+
 	unsigned int row_bytes = png_get_rowbytes( png_ptr, info_ptr );
 	*outData = (unsigned char*)malloc( row_bytes * outHeight );
 
