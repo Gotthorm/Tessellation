@@ -193,7 +193,8 @@ void Framework::Update()
 
 	UpdateCamera(timeElapsed);
 
-	static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	//static const GLfloat clearColor[] = { 0.34f, 0.34f, 0.9f, 1.0f };
+	static const GLfloat clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static const GLfloat one = 1.0f;
 	//static bool wireframe = true;
 	//static bool enable_fog = true;
@@ -207,7 +208,7 @@ void Framework::Update()
 	//glm::mat4 projectionMatrix = glm::perspectiveLH( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
 
 	glViewport( 0, 0, windowWidth, windowHeight );
-	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, black );
+	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, clearColor );
 	OpenGLInterface::ClearBufferfv( GL_DEPTH, 0, &one );
 
 	m_Volstagg.Render( projectionMatrix, viewMatrix );

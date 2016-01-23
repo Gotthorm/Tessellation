@@ -133,7 +133,7 @@ namespace PNG
 	extern unsigned int load(const char * filename, unsigned int tex)
 	{
 		int width, height;
-		bool hasAlpha;
+		bool hasAlpha = false;
 		GLubyte *textureImage;
 
 		bool success = loadPngImage( filename, width, height, hasAlpha, &textureImage );

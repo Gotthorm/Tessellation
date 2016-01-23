@@ -48,10 +48,13 @@ bool Volstagg::Load(const std::string& filename)
 	{
 		OpenGLInterface::PatchParameteri( GL_PATCH_VERTICES, 4 );
 
-		tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
+		//tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
+		tex_displacement = PNG::load( "Media/Textures/Island.png" );
+
 		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
+
 		//tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
-		tex_color = PNG::load( "Media/Textures/Rock.png" );
+		tex_color = PNG::load( "Media/Textures/Green.png" );
 
 		return true;
 	}
@@ -65,7 +68,8 @@ void Volstagg::Draw()
 	glFrontFace(GL_CW);
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glEnable( GL_CULL_FACE );
 
 	OpenGLInterface::DrawArraysInstanced( GL_PATCHES, 0, 4, 4096 );
