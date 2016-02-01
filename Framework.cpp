@@ -131,7 +131,8 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	ResizeWindow(width, height);
 
 	m_Volstagg.Load( "do nothing" );
-	m_Loki.Load( "Media/Objects/cube.sbm" );
+	m_Loki.Load( "Media/Objects/capsule.sbm" );
+	//m_Loki.Load( "Media/Objects/dragon.sbm" );
 
 	// Initialize the 2D text system
 	//m_Text2D.init( 128, 50 );
