@@ -201,24 +201,16 @@ bool Loki::Load(const std::string& filename)
 
 		OpenGLInterface::BufferSubData(GL_ARRAY_BUFFER, 0, data_size, data + vertex_data_chunk->data_offset);
 
-		//for (i = 0; i < vertex_attrib_chunk->attrib_count; i++)
+		for( i = 0; i < vertex_attrib_chunk->attrib_count; i++ )
 		{
-			OpenGLInterface::VertexAttribPointer(0,
-				4,
-				GL_FLOAT,
-				GL_FALSE,
-				0,
-				(GLvoid *)(uintptr_t)0);
-			OpenGLInterface::EnableVertexAttribArray(0);
-		}
-		{
-			OpenGLInterface::VertexAttribPointer(1,
-				3,
-				GL_FLOAT,
-				GL_FALSE,
-				0,
-				(GLvoid *)(uintptr_t)4800000);
-			OpenGLInterface::EnableVertexAttribArray(1);
+			SB6M_VERTEX_ATTRIB_DECL &attrib_decl = vertex_attrib_chunk->attrib_data[ i ];
+			OpenGLInterface::VertexAttribPointer( i,
+				attrib_decl.size,
+				attrib_decl.type,
+				attrib_decl.flags & SB6M_VERTEX_ATTRIB_FLAG_NORMALIZED ? GL_TRUE : GL_FALSE,
+				attrib_decl.stride,
+				(GLvoid *)(uintptr_t)attrib_decl.data_offset );
+			OpenGLInterface::EnableVertexAttribArray( i );
 		}
 
 		m_ObjectCount = vertex_data_chunk->total_vertices;
@@ -238,6 +230,7 @@ bool Loki::Load(const std::string& filename)
 
 void Loki::Draw()
 {
+	glFrontFace( GL_CCW );
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
