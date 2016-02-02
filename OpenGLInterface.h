@@ -10,7 +10,8 @@ struct OpenGLInterface
 {
 	static bool Initialize();
 	static GLuint LoadShader(const char * filename, GLenum shader_type, bool check_errors);
-	static void* OpenGLInterface::GetOpenGLFunctionAddress(const char* name);
+	static void* GetOpenGLFunctionAddress(const char* name);
+	static GLuint LoadTexture(const char* fileName, unsigned int tex = 0);
 
 	static PFNGLCREATEPROGRAMPROC CreateProgram;
 	static PFNGLCREATESHADERPROC CreateShader;

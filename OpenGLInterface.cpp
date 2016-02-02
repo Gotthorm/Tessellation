@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <streambuf>
-
+#include "PNG.h"
 
 PFNGLCREATEPROGRAMPROC OpenGLInterface::CreateProgram = NULL;
 PFNGLCREATESHADERPROC OpenGLInterface::CreateShader = NULL;
@@ -202,4 +202,29 @@ void* OpenGLInterface::GetOpenGLFunctionAddress(const char* name)
 	}
 
 	return pointer;
+}
+
+GLuint OpenGLInterface::LoadTexture( const char* fileName, unsigned int tex )
+{
+	PNG pngFile;
+
+	if( pngFile.Load( fileName ) )
+	{
+		if( tex == 0 )
+		{
+			glGenTextures( 1, &tex );
+		}
+
+		glBindTexture( GL_TEXTURE_2D, tex );
+
+		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
+
+		bool hasAlpha = pngFile.GetHasAlpha();
+
+		glTexImage2D( GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, pngFile.GetWidth(), pngFile.GetHeight(), 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, pngFile.GetData() );
+
+		OpenGLInterface::GenerateMipmap( GL_TEXTURE_2D );
+	}
+		
+	return tex;
 }
