@@ -153,6 +153,7 @@
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KTX.cpp" />
+    <ClCompile Include="Landscape.cpp" />
     <ClCompile Include="Loki.cpp" />
     <ClCompile Include="OpenGLInterface.cpp" />
     <ClCompile Include="PNG.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Heimdall.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="KTX.h" />
+    <ClInclude Include="Landscape.h" />
     <ClInclude Include="Loki.h" />
     <ClInclude Include="OpenGLInterface.h" />
     <ClInclude Include="PNG.h" />

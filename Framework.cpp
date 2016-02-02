@@ -130,7 +130,7 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 
 	ResizeWindow(width, height);
 
-	m_Volstagg.Load( "do nothing" );
+	m_Landscape.Initialize();
 	m_Loki.Load( "Media/Objects/capsule.sbm" );
 	//m_Loki.Load( "Media/Objects/dragon.sbm" );
 
@@ -212,7 +212,7 @@ void Framework::Update()
 	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, clearColor );
 	OpenGLInterface::ClearBufferfv( GL_DEPTH, 0, &one );
 
-	m_Volstagg.Render( projectionMatrix, viewMatrix );
+	m_Landscape.Render( projectionMatrix, viewMatrix );
 	m_Loki.Render( projectionMatrix, viewMatrix );
 
 #if 0

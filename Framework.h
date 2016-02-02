@@ -4,7 +4,7 @@
 #define _FRAMEWORK_HPP_
 
 #include <windows.h>
-#include "Volstagg.h"
+#include "Landscape.h"
 #include "Loki.h"
 #include <gl\GL.h>
 #include "Text2D.h"
@@ -67,7 +67,7 @@ private:
 	float m_FOVX;
 	Text2D m_Text2D;
 
-	Volstagg m_Volstagg;
+	Landscape m_Landscape;
 	Loki m_Loki;
 
 	struct
