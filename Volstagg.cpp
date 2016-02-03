@@ -48,12 +48,12 @@ bool Volstagg::Load(const std::string& filename)
 		OpenGLInterface::PatchParameteri( GL_PATCH_VERTICES, 4 );
 
 		//tex_displacement = KTX::load( "Media/Textures/terragen1.ktx" );
-		tex_displacement = OpenGLInterface::LoadTexture( filename.c_str() );
+		tex_displacement = OpenGLInterface::LoadTextureFromPNG( filename.c_str() );
 
 		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
 
 		//tex_color = KTX::load( "Media/Textures/terragen_color.ktx" );
-		tex_color = OpenGLInterface::LoadTexture( "Media/Textures/Green.png" );
+		tex_color = OpenGLInterface::LoadTextureFromPNG( "Media/Textures/Green.png" );
 
 		return true;
 	}

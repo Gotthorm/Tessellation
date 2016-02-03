@@ -54,6 +54,9 @@
     <ClCompile Include="Landscape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HeightMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework.h">
@@ -93,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Landscape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeightMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

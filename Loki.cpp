@@ -241,3 +241,8 @@ void Loki::Draw()
 
 	OpenGLInterface::BindVertexArray( 0 );
 }
+
+void Loki::SetOrientation( const glm::mat4& orientationMatrix )
+{
+	m_Orientation = orientationMatrix;
+}

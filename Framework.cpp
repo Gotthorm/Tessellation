@@ -192,6 +192,14 @@ void Framework::Update()
 	// Update the old time for the next update
 	m_OldFrameTime = newFrameTime;
 
+	glm::vec2 avatarPosition = glm::vec2(0,0);
+	float height = 0.0f;
+	m_Landscape.GetHeight( avatarPosition, height );
+	glm::mat4 avatarOrientation = glm::rotate( glm::mat4(), glm::radians( 0.0f ), glm::vec3( 1, 0, 0 ) );
+	avatarOrientation = glm::translate( avatarOrientation, glm::vec3( avatarPosition[0], height, avatarPosition[ 1 ]) );
+
+	m_Loki.SetOrientation( avatarOrientation );
+
 	UpdateCamera(timeElapsed);
 
 	//static const GLfloat clearColor[] = { 0.34f, 0.34f, 0.9f, 1.0f };

@@ -13,6 +13,8 @@ public:
 
     bool Load(const std::string& filename);
 
+	void SetOrientation( const glm::mat4& orientationMatrix );
+
 private:
 	virtual bool InitializeAllUniformVariables();
 	virtual void UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);

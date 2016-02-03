@@ -11,7 +11,8 @@ struct OpenGLInterface
 	static bool Initialize();
 	static GLuint LoadShader(const char * filename, GLenum shader_type, bool check_errors);
 	static void* GetOpenGLFunctionAddress(const char* name);
-	static GLuint LoadTexture(const char* fileName, unsigned int tex = 0);
+	static GLuint LoadTextureFromPNG(const char* fileName, unsigned int tex = 0);
+	static GLuint CreateTextureFromImageData( const unsigned char* imageData, unsigned int height, unsigned int width, bool hasAlpha, unsigned int tex );
 
 	static PFNGLCREATEPROGRAMPROC CreateProgram;
 	static PFNGLCREATESHADERPROC CreateShader;

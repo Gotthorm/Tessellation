@@ -204,11 +204,21 @@ void* OpenGLInterface::GetOpenGLFunctionAddress(const char* name)
 	return pointer;
 }
 
-GLuint OpenGLInterface::LoadTexture( const char* fileName, unsigned int tex )
+GLuint OpenGLInterface::LoadTextureFromPNG( const char* fileName, unsigned int tex )
 {
 	PNG pngFile;
 
 	if( pngFile.Load( fileName ) )
+	{
+		tex = CreateTextureFromImageData( pngFile.GetData(), pngFile.GetWidth(), pngFile.GetHeight(), pngFile.GetHasAlpha(), tex );
+	}
+		
+	return tex;
+}
+
+GLuint OpenGLInterface::CreateTextureFromImageData( const unsigned char* imageData, unsigned int height, unsigned int width, bool hasAlpha, unsigned int tex )
+{
+	if( imageData )
 	{
 		if( tex == 0 )
 		{
@@ -219,12 +229,12 @@ GLuint OpenGLInterface::LoadTexture( const char* fileName, unsigned int tex )
 
 		glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 
-		bool hasAlpha = pngFile.GetHasAlpha();
+		GLint format = hasAlpha ? GL_RGBA : GL_RGB;
 
-		glTexImage2D( GL_TEXTURE_2D, 0, hasAlpha ? 4 : 3, pngFile.GetWidth(), pngFile.GetHeight(), 0, hasAlpha ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, pngFile.GetData() );
+		glTexImage2D( GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, imageData );
 
 		OpenGLInterface::GenerateMipmap( GL_TEXTURE_2D );
 	}
-		
+
 	return tex;
 }
