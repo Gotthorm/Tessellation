@@ -27,7 +27,7 @@ struct OpenGLInterface
 	static PFNGLDELETEPROGRAMPROC DeleteProgram;
 	static PFNGLDELETESHADERPROC DeleteShader;
 	static PFNGLACTIVETEXTUREPROC ActiveTexture;
-	static PFNGLBINDTEXTUREUNITPROC BindTexture;
+	static PFNGLBINDTEXTUREUNITPROC BindTextureUnit;
 	static PFNGLTEXSTORAGE1DPROC TexStorage1D;
 	static PFNGLTEXSTORAGE2DPROC TexStorage2D;
 	static PFNGLTEXSTORAGE3DPROC TexStorage3D;
@@ -52,6 +52,7 @@ struct OpenGLInterface
 	static PFNGLDELETEBUFFERSPROC DeleteBuffers;
 	static PFNGLGETUNIFORMLOCATIONPROC GetUniformLocation;
 	static PFNGLUNIFORMMATRIX4FVPROC UniformMatrix4fv;
+	static PFNGLUNIFORM3FPROC Uniform3f;
 	static PFNGLUNIFORM1FPROC Uniform1f;
 	static PFNGLUNIFORM1IPROC Uniform1i;
 	static PFNGLDRAWARRAYSINSTANCEDPROC DrawArraysInstanced;
@@ -63,6 +64,7 @@ struct OpenGLInterface
 
 	//typedef void (APIENTRY* PFNGLBUFFERDATAPROC)(GLenum, GLuint, const GLvoid *, GLenum);
 	static PFNGLBUFFERDATAPROC BufferData;
+	static PFNGLCREATETEXTURESPROC CreateTextures;
 
 	static PFNGLGETPROGRAMIVPROC GetProgramiv;
 	static PFNGLISSHADERPROC IsShader;

@@ -316,7 +316,7 @@ bool save(const char * filename, unsigned int target, unsigned int tex)
     memcpy(h.identifier, identifier, sizeof(identifier));
     h.endianness = 0x04030201;
 
-	OpenGLInterface::BindTexture(target, tex);
+	glBindTexture(target, tex);
 
 	glGetTexLevelParameteriv(target, 0, GL_TEXTURE_WIDTH, (GLint *)&h.pixelwidth);
 	glGetTexLevelParameteriv(target, 0, GL_TEXTURE_HEIGHT, (GLint *)&h.pixelheight);

@@ -30,6 +30,7 @@ void Text2D::init(int width, int height, const char* font)
 	glBindTexture(GL_TEXTURE_2D, text_buffer);
 	OpenGLInterface::TexStorage2D(GL_TEXTURE_2D, 1, GL_R8UI, width, height);
 
+	glPixelStorei( GL_UNPACK_ALIGNMENT, 4 );
 	font_texture = KTX::load(font ? font : "Media/Textures/cp437_9x16.ktx");
 
 	screen_buffer = new char[width * height];
@@ -62,7 +63,7 @@ void Text2D::draw()
 		dirty = false;
 	}
 	OpenGLInterface::ActiveTexture(GL_TEXTURE1);
-	OpenGLInterface::BindTexture(GL_TEXTURE_2D_ARRAY, font_texture);
+	glBindTexture(GL_TEXTURE_2D_ARRAY, font_texture);
 
 	OpenGLInterface::BindVertexArray(vao);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

@@ -18,7 +18,7 @@ PFNGLDELETEVERTEXARRAYSPROC OpenGLInterface::DeleteVertexArrays = NULL;
 PFNGLDELETEPROGRAMPROC OpenGLInterface::DeleteProgram = NULL;
 PFNGLDELETESHADERPROC OpenGLInterface::DeleteShader = NULL;
 PFNGLACTIVETEXTUREPROC OpenGLInterface::ActiveTexture = NULL;
-PFNGLBINDTEXTUREUNITPROC OpenGLInterface::BindTexture = NULL;
+PFNGLBINDTEXTUREUNITPROC OpenGLInterface::BindTextureUnit = NULL;
 PFNGLTEXSTORAGE1DPROC OpenGLInterface::TexStorage1D = NULL;
 PFNGLTEXSTORAGE2DPROC OpenGLInterface::TexStorage2D = NULL;
 PFNGLTEXSTORAGE3DPROC OpenGLInterface::TexStorage3D = NULL;
@@ -43,6 +43,7 @@ PFNGLENABLEVERTEXATTRIBARRAYPROC OpenGLInterface::EnableVertexAttribArray = NULL
 PFNGLDELETEBUFFERSPROC OpenGLInterface::DeleteBuffers = NULL;
 PFNGLGETUNIFORMLOCATIONPROC OpenGLInterface::GetUniformLocation = NULL;
 PFNGLUNIFORMMATRIX4FVPROC OpenGLInterface::UniformMatrix4fv = NULL;
+PFNGLUNIFORM3FPROC OpenGLInterface::Uniform3f = NULL;
 PFNGLUNIFORM1FPROC OpenGLInterface::Uniform1f = NULL;
 PFNGLUNIFORM1IPROC OpenGLInterface::Uniform1i = NULL;
 PFNGLDRAWARRAYSINSTANCEDPROC OpenGLInterface::DrawArraysInstanced = NULL;
@@ -53,6 +54,8 @@ PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC OpenGLInterface::CompressedTexSubImage2D = NULL
 PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC OpenGLInterface::CompressedTexSubImage3D = NULL;
 
 PFNGLBUFFERDATAPROC OpenGLInterface::BufferData = NULL;
+PFNGLCREATETEXTURESPROC OpenGLInterface::CreateTextures = NULL;
+
 //PFNGLDRAWARRAYSPROC OpenGLInterface::DrawArrays = NULL;
 
 PFNGLGETPROGRAMIVPROC OpenGLInterface::GetProgramiv = NULL;
@@ -74,7 +77,7 @@ bool OpenGLInterface::Initialize()
 	DeleteProgram = (PFNGLDELETEPROGRAMPROC)GetOpenGLFunctionAddress("glDeleteProgram");
 	DeleteShader = (PFNGLDELETESHADERPROC)GetOpenGLFunctionAddress("glDeleteShader");
 	ActiveTexture = (PFNGLACTIVETEXTUREPROC)GetOpenGLFunctionAddress("glActiveTexture");
-	BindTexture = (PFNGLBINDTEXTUREUNITPROC)GetOpenGLFunctionAddress("glBindTexture");
+	BindTextureUnit = (PFNGLBINDTEXTUREUNITPROC)GetOpenGLFunctionAddress("glBindTextureUnit");
 	TexStorage1D = (PFNGLTEXSTORAGE1DPROC)GetOpenGLFunctionAddress("glTexStorage1D");
 	TexStorage2D = (PFNGLTEXSTORAGE2DPROC)GetOpenGLFunctionAddress("glTexStorage2D");
 	TexStorage3D = (PFNGLTEXSTORAGE3DPROC)GetOpenGLFunctionAddress("glTexStorage3D");
@@ -99,6 +102,7 @@ bool OpenGLInterface::Initialize()
 	DeleteBuffers = (PFNGLDELETEBUFFERSPROC)GetOpenGLFunctionAddress("glDeleteBuffers");
 	GetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)GetOpenGLFunctionAddress("glGetUniformLocation");
 	UniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)GetOpenGLFunctionAddress("glUniformMatrix4fv");
+	Uniform3f = (PFNGLUNIFORM3FPROC)GetOpenGLFunctionAddress( "glUniform3f" );
 	Uniform1f = (PFNGLUNIFORM1FPROC)GetOpenGLFunctionAddress( "glUniform1f" );
 	Uniform1i = (PFNGLUNIFORM1IPROC)GetOpenGLFunctionAddress( "glUniform1i" );
 	DrawArraysInstanced = (PFNGLDRAWARRAYSINSTANCEDPROC)GetOpenGLFunctionAddress("glDrawArraysInstanced");
@@ -109,6 +113,8 @@ bool OpenGLInterface::Initialize()
 	CompressedTexSubImage3D = (PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC)GetOpenGLFunctionAddress("glCompressedTexSubImage3D");
 
 	//DrawArrays = (PFNGLDRAWARRAYSPROC)GetOpenGLFunctionAddress("glDrawArrays");
+	CreateTextures = (PFNGLCREATETEXTURESPROC)GetOpenGLFunctionAddress( "glCreateTextures" );
+
 
 	GetProgramiv = (PFNGLGETPROGRAMIVPROC)GetOpenGLFunctionAddress("glGetProgramiv");
 	IsShader = (PFNGLISSHADERPROC)GetOpenGLFunctionAddress("glIsShader");
