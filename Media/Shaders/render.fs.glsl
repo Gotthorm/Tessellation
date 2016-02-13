@@ -12,10 +12,10 @@ in VS_OUT
 } fs_in;
 
 // Material properties
-uniform vec3 diffuse_albedo = vec3(0.3, 0.5, 0.2);
+uniform vec3 diffuse_albedo = vec3(0.9, 0.3, 0.2);
 uniform vec3 specular_albedo = vec3(0.7);
 uniform float specular_power = 128.0;
-uniform vec3 rim_color = vec3(0.1, 0.2, 0.2);
+uniform vec3 rim_color = vec3(0.7, 0.2, 0.2);
 uniform float rim_power = 5.0;
 
 vec3 calculate_rim(vec3 N, vec3 V)
