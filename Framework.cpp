@@ -135,7 +135,7 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	//m_Loki.Load( "Media/Objects/dragon.sbm" );
 
 	// Initialize the 2D text system
-	//m_Text2D.init( 128, 50 );
+	m_Text2D.init( 128, 50 );
 	
 	return true;
 }
@@ -148,7 +148,7 @@ void Framework::Shutdown()
 		delete m_pInput;
 		m_pInput = NULL;
 	}
-	//m_Text2D.Shutdown();
+	m_Text2D.Shutdown();
 }
 
 void Framework::Update()
@@ -223,7 +223,7 @@ void Framework::Update()
 	m_Landscape.Render( projectionMatrix, viewMatrix );
 	m_Loki.Render( projectionMatrix, viewMatrix );
 
-#if 0
+#if 1
 	glPolygonMode(GL_FRONT, GL_FILL);
 
 	std::stringstream s;
