@@ -27,6 +27,7 @@ private:
 	Volstagg m_Volstagg;
 	HeightMap m_HeightMap;
 	glm::vec2 m_OriginOffset;
+	unsigned short int m_HeightScale;
 };
 
 #endif /* __LANDSCAPE_H__ */

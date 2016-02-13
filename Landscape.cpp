@@ -6,7 +6,7 @@
 
 Landscape::Landscape()
 {
-
+	m_HeightScale = 96;
 }
 
 Landscape::~Landscape()
@@ -23,7 +23,7 @@ bool Landscape::Initialize()
 
 	if( pngFile.Load( "Media/Textures/Island.png" ) )
 	{
-		if( m_HeightMap.Import( pngFile.GetData(), pngFile.GetWidth(), pngFile.GetHeight(), pngFile.GetHasAlpha() ? HeightMap::RGBA : HeightMap::RGB ) )
+		if( m_HeightMap.Import( pngFile.GetData(), pngFile.GetWidth(), pngFile.GetHeight(), m_HeightScale, pngFile.GetHasAlpha() ? HeightMap::RGBA : HeightMap::RGB ) )
 		{
 			m_Volstagg.Load( "Media/Textures/Island.png" );
 
@@ -45,7 +45,7 @@ bool Landscape::GetHeight( const glm::vec2& position, float& height )
 	unsigned int posX = (unsigned int)( ( ( position[ 0 ] + m_OriginOffset[ 0 ] ) / 16 ) + 0.5f ) * 16;
 	unsigned int posY = (unsigned int)( ( ( position[ 1 ] + m_OriginOffset[ 1 ] ) / 16 ) + 0.5f ) * 16;
 
-	unsigned int dataIndex = posX * m_HeightMap.GetWidth() + posY;
+	unsigned int dataIndex = posY * m_HeightMap.GetWidth() + posX;
 
 	height = (float)m_HeightMap.GetData()[dataIndex];
 

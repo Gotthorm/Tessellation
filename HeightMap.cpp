@@ -107,7 +107,7 @@ bool HeightMap::Save( const char* fileName )
 	return result;
 }
 
-bool HeightMap::Import( const unsigned char* importData, unsigned int width, unsigned int height, Format format )
+bool HeightMap::Import( const unsigned char* importData, unsigned int width, unsigned int height, unsigned short int heightScale, Format format )
 {	
 	if( importData != NULL )
 	{
@@ -130,7 +130,9 @@ bool HeightMap::Import( const unsigned char* importData, unsigned int width, uns
 
 		for( unsigned int index = 0; index < totalEntries; ++index )
 		{
-			m_Data[ index ] = *importData;
+			float redValue = (float)*importData;
+			float normalizedValue = redValue / UCHAR_MAX;
+			m_Data[ index ] = ( unsigned short )( normalizedValue * heightScale );
 			importData += incrementStep;
 		}
 
@@ -146,7 +148,7 @@ float RangedRandom(float v1,float v2)
 }
 
 
-bool HeightMap::CreateFromRandom( int gridSize, float rough )
+bool HeightMap::CreateFromRandom( int gridSize, float rough, unsigned short int heightScale )
 {
 	// If an old height map exists, delete it
 	if( m_Data )
@@ -301,7 +303,7 @@ bool HeightMap::CreateFromRandom( int gridSize, float rough )
 	for(int Loop = 0; Loop < (gridSize * gridSize); Loop++)
 	{
 		assert(floatMap[Loop] >= 0.0 && floatMap[Loop] <= 1.0);
-		m_Data[Loop] = (unsigned short int)(floatMap[Loop] * 0xFF);
+		m_Data[Loop] = (unsigned short int)(floatMap[Loop] * heightScale);
 	}
 
 	delete floatMap;

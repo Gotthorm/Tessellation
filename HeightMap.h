@@ -15,11 +15,11 @@ public:
 		RGBA,
 	};
 
-	bool Import( const unsigned char* data, unsigned int width, unsigned int height, Format format );
+	bool Import( const unsigned char* data, unsigned int width, unsigned int height, unsigned short int heightScale, Format format );
 	bool Load( const char* fileName );
 	bool Save( const char* fileName );
 
-	bool CreateFromRandom( int size, float rough );
+	bool CreateFromRandom( int size, float rough, unsigned short int heightScale );
 
 	unsigned int GetWidth() { return m_Width; }
 	unsigned int GetHeight() { return m_Height; }
