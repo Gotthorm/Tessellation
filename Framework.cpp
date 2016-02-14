@@ -101,8 +101,10 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	OpenGLInterface::Initialize();
 
 	m_CameraPosition = m_PlayerPosition = glm::vec3();
+	m_PlayerRotationDegrees = 0.0f;
 
-	m_CameraOrientation = m_PlayerOrientation = glm::vec3(0,0,1);
+	m_CameraOrientation = glm::vec3(0,0,1);
+	m_PlayerOrientation = glm::vec4( 0, 0, 1, 1 );
 
 	//m_CameraPosition = Vector3(0, 0, 100);
 	m_CameraPosition = glm::vec3( 0.0f, 30.f, 0.0f );
@@ -192,15 +194,11 @@ void Framework::Update()
 	// Update the old time for the next update
 	m_OldFrameTime = newFrameTime;
 
-	glm::vec2 avatarPosition = glm::vec2(0,0);
-	float height = 0.0f;
-	m_Landscape.GetHeight( avatarPosition, height );
-	glm::mat4 avatarOrientation = glm::rotate( glm::mat4(), glm::radians( 0.0f ), glm::vec3( 1, 0, 0 ) );
-	avatarOrientation = glm::translate( avatarOrientation, glm::vec3( avatarPosition[0], height, avatarPosition[ 1 ]) );
+	glm::mat4 avatarOrientation;
 
-	m_Loki.SetOrientation( avatarOrientation );
+	UpdateAvatar( timeElapsed, avatarOrientation );
 
-	UpdateCamera(timeElapsed);
+	UpdateCamera( timeElapsed, avatarOrientation );
 
 	//static const GLfloat clearColor[] = { 0.34f, 0.34f, 0.9f, 1.0f };
 	static const GLfloat clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -226,11 +224,16 @@ void Framework::Update()
 #if 1
 	glPolygonMode(GL_FRONT, GL_FILL);
 
-	std::stringstream s;
-	s.precision(2);
-	s << std::fixed << "FPS:" << m_CurrentFPS << " Position(" << m_CameraPosition[0] << ", " << m_CameraPosition[1] << ", " << m_CameraPosition[2] << ") Orientation(" << m_CameraOrientation[0] << ", " << m_CameraOrientation[1] << ", " << m_CameraOrientation[2] << ")";
+	char stringBuffer[256];
 
-	m_Text2D.drawText(s.str().c_str(), 0, 0);
+	sprintf( stringBuffer, "FPS:%4u  Camera Mode: %s", m_CurrentFPS, "Free" );
+	m_Text2D.drawText( stringBuffer, 0, 0 );
+
+	sprintf( stringBuffer, "Camera Position(%6.2f, %6.2f, %6.2f) Camera Orientation(%6.2f, %6.2f, %6.2f)", m_CameraPosition[ 0 ], m_CameraPosition[ 1 ], m_CameraPosition[ 2 ], m_CameraOrientation[ 0 ], m_CameraOrientation[ 1 ], m_CameraOrientation[ 2 ] );
+	m_Text2D.drawText( stringBuffer, 0, 1 );
+
+	sprintf( stringBuffer, "Avatar Position(%6.2f, %6.2f, %6.2f) Avatar Orientation(%6.2f, %6.2f, %6.2f)", m_PlayerPosition[ 0 ], m_PlayerPosition[ 1 ], m_PlayerPosition[ 2 ], m_PlayerOrientation[ 0 ], m_PlayerOrientation[ 1 ], m_PlayerOrientation[ 2 ] );
+	m_Text2D.drawText( stringBuffer, 0, 2 );
 
 	m_Text2D.draw();
 #endif
@@ -250,7 +253,60 @@ void Framework::UpdateInput(LPARAM lParam)
 	}
 }
 
-void Framework::UpdateCamera(DWORD timeElapsed)
+void Framework::UpdateAvatar( DWORD timeElapsed, glm::mat4& avatarOrientation )
+{
+	if( m_pInput )
+	{
+		float MovementIncrement = 50.0f * ( timeElapsed / 1000.0f );
+		glm::vec3 movementVector = glm::vec3( m_PlayerOrientation.x, m_PlayerOrientation.y, m_PlayerOrientation.z ) * MovementIncrement;
+
+		if( m_pInput->GetKey( Input::KEY_W ) )
+		{
+			//camera->ProcessKeyboard(FORWARD, deltaTime);
+			m_PlayerPosition = m_PlayerPosition + movementVector;
+		}
+		else if( m_pInput->GetKey( Input::KEY_S ) )
+		{
+			//camera->ProcessKeyboard(BACKWARD, deltaTime);
+			m_PlayerPosition = m_PlayerPosition - movementVector;
+		}
+
+		float RotationIncrement = 100.0f * ( timeElapsed / 1000.0f );
+
+		if( m_pInput->GetKey( Input::KEY_D ) )
+		{
+			m_PlayerRotationDegrees -= RotationIncrement;
+			while( m_PlayerRotationDegrees <= 360.0f )
+			{
+				m_PlayerRotationDegrees += 360.0f;
+			}
+		}
+		else if( m_pInput->GetKey( Input::KEY_A ) )
+		{
+			m_PlayerRotationDegrees += RotationIncrement;
+			while( m_PlayerRotationDegrees >= 360.0f )
+			{
+				m_PlayerRotationDegrees -= 360.0f;
+			}
+		}
+	}
+
+	float height = 0.0f;
+	m_Landscape.GetHeight( glm::vec2(m_PlayerPosition.x, m_PlayerPosition.z), height );
+	m_PlayerPosition.y = height;
+
+	glm::mat4 translationMatrix = glm::translate( glm::mat4(), m_PlayerPosition );
+
+	glm::mat4 rotationMatrix = glm::rotate( glm::mat4(), glm::radians( m_PlayerRotationDegrees ), glm::vec3( 0, 1, 0 ) );
+
+	avatarOrientation = translationMatrix * rotationMatrix;
+
+	m_Loki.SetOrientation( avatarOrientation );
+
+	m_PlayerOrientation = rotationMatrix * glm::vec4( 0, 0, 1, 1 );
+}
+
+void Framework::UpdateCamera( DWORD timeElapsed, const glm::mat4& avatarOrientation )
 {
 	// nTimeDelta is the number of milliseconds that has elapsed since the last frame
 	if (m_pInput != NULL)

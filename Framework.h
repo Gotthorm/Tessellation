@@ -47,7 +47,8 @@ public:
 	void ResizeWindow(int width, int height);
 
 private:
-	void UpdateCamera(DWORD timeElapsed);
+	void UpdateCamera(DWORD timeElapsed, const glm::mat4& avatarOrientation );
+	void UpdateAvatar( DWORD timeElapsed, glm::mat4& avatarOrientation );
 
 	Input* m_pInput;
 	DWORD m_OldFrameTime;
@@ -59,7 +60,8 @@ private:
 	glm::vec3 m_CameraPosition;
 	glm::vec3 m_CameraOrientation;
 	glm::vec3 m_PlayerPosition;
-	glm::vec3 m_PlayerOrientation;
+	glm::vec4 m_PlayerOrientation;
+	float m_PlayerRotationDegrees;
 	float m_CameraTargetPitch;
 	float m_CameraTargetYaw;
 	float m_CameraCurrentPitch;
