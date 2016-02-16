@@ -25,7 +25,7 @@ bool Volstagg::InitializeAllUniformVariables()
 		InitializeUniformVariable( "projection_matrix", m_UniformProjectionMatrix ) )
 	{ 
 		// Identity matrix
-		m_Orientation = glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0));
+		SetOrientation( glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(1, 0, 0)) );
 
 		return true;
 	}
@@ -38,7 +38,7 @@ void Volstagg::UpdateUniformVariables(const glm::mat4& projectionMatrix, const g
 	OpenGLInterface::UniformMatrix4fv( m_UniformViewMatrix, 1, GL_FALSE, glm::value_ptr( viewMatrix ) );
 	OpenGLInterface::UniformMatrix4fv( m_UniformProjectionMatrix, 1, GL_FALSE, glm::value_ptr( projectionMatrix ) );
 
-	OpenGLInterface::UniformMatrix4fv( m_UniformModelMatrix, 1, GL_FALSE, glm::value_ptr( m_Orientation ) );
+	OpenGLInterface::UniformMatrix4fv( m_UniformModelMatrix, 1, GL_FALSE, glm::value_ptr( GetOrientation() ) );
 }
 
 bool Volstagg::Load(const std::string& filename)

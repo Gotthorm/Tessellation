@@ -5,10 +5,11 @@
 
 #include <string>
 #include <gl\GL.h>
-#include <glm/glm.hpp>
+//#include <glm/glm.hpp>
 #include "Shader.h"
+#include "Object.h"
 
-class RenderObject
+class RenderObject : public Object
 {
 public:
 	void Render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
@@ -40,7 +41,6 @@ protected:
 
 	bool m_Initialized;
 
-	glm::mat4 m_Orientation;
 	Shader m_Shader;
 };
 

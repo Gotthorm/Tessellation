@@ -127,7 +127,7 @@ bool Loki::InitializeAllUniformVariables()
 		InitializeUniformVariable( "projection_matrix", m_UniformProjectionMatrix ) )
 	{
 		// Identity matrix
-		m_Orientation = glm::rotate( glm::mat4(), glm::radians( 0.0f ), glm::vec3( 1, 0, 0 ) );
+		SetOrientation( glm::rotate( glm::mat4(), glm::radians( 0.0f ), glm::vec3( 1, 0, 0 ) ) );
 
 		return true;
 	}
@@ -139,7 +139,7 @@ void Loki::UpdateUniformVariables(const glm::mat4& projectionMatrix, const glm::
 {
 	OpenGLInterface::UniformMatrix4fv(m_UniformViewMatrix, 1, GL_FALSE, glm::value_ptr( viewMatrix) );
 	OpenGLInterface::UniformMatrix4fv(m_UniformProjectionMatrix, 1, GL_FALSE, glm::value_ptr( projectionMatrix) );
-	OpenGLInterface::UniformMatrix4fv(m_UniformModelMatrix, 1, GL_FALSE, glm::value_ptr( m_Orientation ) );
+	OpenGLInterface::UniformMatrix4fv(m_UniformModelMatrix, 1, GL_FALSE, glm::value_ptr( GetOrientation() ) );
 }
 
 bool Loki::Load(const std::string& filename)
@@ -240,9 +240,4 @@ void Loki::Draw()
 	glDrawArrays( GL_TRIANGLES, 0, m_ObjectCount );
 
 	OpenGLInterface::BindVertexArray( 0 );
-}
-
-void Loki::SetOrientation( const glm::mat4& orientationMatrix )
-{
-	m_Orientation = orientationMatrix;
 }
