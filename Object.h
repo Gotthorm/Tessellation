@@ -17,7 +17,9 @@ public:
 
 	void SetOrientation( const glm::mat4& orientationMatrix );
 
-	const glm::vec3& GetPosition() { return m_Position; }
+	const glm::vec3& GetPosition() const { return m_Position; }
+
+	void SetPosition( const glm::vec3& position );
 
 protected:
 	Object();

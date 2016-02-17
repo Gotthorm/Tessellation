@@ -8,7 +8,7 @@
 #include "Input.h"
 #include <sstream>
 #include <iostream>
-//#include "KTX.h"
+#include "Camera.h"
 #include "OpenGLInterface.h"
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -24,7 +24,7 @@ const float kCameraOffsetDistance = 10.0f;
 const float kCameraFollowHeightAngle = glm::radians(20.0f);
 const float kCameraMinimumHeightAboveGround = 2.0f;
 
-Framework::Framework() : m_pInput( NULL ), m_OldFrameTime(0), m_OneSecondIntervalAccumulator(0), m_UpdateAccumulator(0), m_CurrentFPS(0), m_WindowHandleToDeviceContext(NULL)
+Framework::Framework() : m_pInput( NULL ), m_OldFrameTime(0), m_OneSecondIntervalAccumulator(0), m_UpdateAccumulator(0), m_CurrentFPS(0), m_WindowHandleToDeviceContext(NULL), m_Camera(NULL)
 {
 }
 
@@ -139,6 +139,14 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	// Initialize the 2D text system
 	m_Text2D.init( 128, 50 );
 	
+	glm::vec2 cameraOffset( 5, 5 );
+
+	m_Camera = new Camera();
+
+	m_Camera->SetPosition( m_PlayerPosition + glm::vec3( cameraOffset.x, cameraOffset.y, 0 ) );
+
+	m_Camera->SetTarget( &m_Loki, cameraOffset );
+
 	return true;
 }
 
@@ -198,6 +206,8 @@ void Framework::Update()
 
 	UpdateAvatar( timeElapsed, avatarOrientation );
 
+	m_Camera->Update( timeElapsed );
+
 	UpdateCamera( timeElapsed, avatarOrientation );
 
 	//static const GLfloat clearColor[] = { 0.34f, 0.34f, 0.9f, 1.0f };
@@ -217,6 +227,8 @@ void Framework::Update()
 	glViewport( 0, 0, windowWidth, windowHeight );
 	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, clearColor );
 	OpenGLInterface::ClearBufferfv( GL_DEPTH, 0, &one );
+
+	viewMatrix = m_Camera->GetOrientation();
 
 	m_Landscape.Render( projectionMatrix, viewMatrix );
 	m_Loki.Render( projectionMatrix, viewMatrix );
