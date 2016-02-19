@@ -8,7 +8,7 @@
 #include "Input.h"
 #include <sstream>
 #include <iostream>
-#include "Camera.h"
+#include "FollowCamera.h"
 #include "OpenGLInterface.h"
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -139,13 +139,13 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	// Initialize the 2D text system
 	m_Text2D.init( 128, 50 );
 	
-	glm::vec2 cameraOffset( 5, 5 );
+	glm::vec2 cameraOffset( 35, 15 );
 
-	m_Camera = new Camera();
+	m_Camera = new FollowCamera( &m_Loki );
 
 	m_Camera->SetPosition( m_PlayerPosition + glm::vec3( cameraOffset.x, cameraOffset.y, 0 ) );
 
-	m_Camera->SetTarget( &m_Loki, cameraOffset );
+	m_Camera->SetOffset( cameraOffset );
 
 	return true;
 }

@@ -151,13 +151,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="KTX.cpp" />
     <ClCompile Include="Landscape.cpp" />
     <ClCompile Include="Loki.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="OpenGLInterface.cpp" />
     <ClCompile Include="PNG.cpp" />
     <ClCompile Include="RenderObject.cpp" />
@@ -168,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="glext.h" />
     <ClInclude Include="HeightMap.h" />

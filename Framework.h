@@ -10,7 +10,7 @@
 #include "Text2D.h"
 
 class Input;
-class Camera;
+class FollowCamera;
 
 class Framework
 {
@@ -89,7 +89,7 @@ private:
 	//GLuint tex_displacement;
 	GLuint tex_color;
 
-	Camera* m_Camera;
+	FollowCamera* m_Camera;
 };
 
 #endif // _FRAMEWORK_HPP_
