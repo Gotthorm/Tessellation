@@ -10,7 +10,7 @@
 
 const std::string shaderName( "tessellation" );
 
-Volstagg::Volstagg()
+Volstagg::Volstagg() : RenderObject("Landscape Renderer")
 {
 }
 
@@ -51,7 +51,7 @@ bool Volstagg::Load(const std::string& filename)
 
 		OpenGLInterface::ActiveTexture( GL_TEXTURE1 );
 
-		tex_color = OpenGLInterface::LoadTextureFromPNG( "Media/Textures/Green.png" );
+		tex_color = OpenGLInterface::LoadTextureFromPNG( "Media/Textures/Rock.png" );
 
 		return true;
 	}
@@ -68,8 +68,8 @@ void Volstagg::Draw()
 	glFrontFace(GL_CW);
 	glEnable( GL_DEPTH_TEST );
 	glDepthFunc( GL_LEQUAL );
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
-	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+	//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 	glEnable( GL_CULL_FACE );
 
 	OpenGLInterface::DrawArraysInstanced( GL_PATCHES, 0, 4, 4096 );

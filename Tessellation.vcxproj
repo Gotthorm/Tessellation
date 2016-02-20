@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="FollowCamera.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="HeightMap.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="FollowCamera.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="glext.h" />

@@ -9,13 +9,8 @@
 class Camera : public Object
 {
 public:
-	Camera();
+	Camera(const std::string& name);
 	virtual ~Camera();
-
-	virtual void Update( DWORD timeElapsed ) {}
-
-protected:
-	glm::vec3 m_Direction;
 };
 
 #endif /* __CAMERA_H__ */

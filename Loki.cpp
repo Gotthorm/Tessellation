@@ -112,7 +112,7 @@ typedef struct SB6M_CHUNK_COMMENT_t
 
 const std::string shaderName("render");
 
-Loki::Loki()
+Loki::Loki() : RenderObject("SBM Object Renderer")
 {
 }
 

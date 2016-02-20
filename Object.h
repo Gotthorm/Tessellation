@@ -6,11 +6,14 @@
 #define __OBJECT_H__
 
 #include <glm/glm.hpp>
+#include <string>
 
 class Object
 {
 public:
-	const glm::mat4& GetOrientation() { return m_Orientation; }
+	const std::string& GetName() const { return m_Name; }
+
+	const glm::mat4& GetOrientation() const { return m_Orientation; }
 
 	void SetOrientation( const glm::mat4& orientationMatrix ) { m_Orientation = orientationMatrix; }
 
@@ -23,11 +26,12 @@ public:
 	glm::vec3 GetPosition() const { return glm::vec3( m_Orientation[ 3 ] ); }
 
 protected:
-	Object() : m_Orientation( 1 ) {}
+	Object(const std::string& name) : m_Orientation( 1 ), m_Name(name) {}
 	virtual ~Object() {}
 
 private:
 	glm::mat4 m_Orientation;
+	std::string m_Name;
 };
 
 #endif /* __OBJECT_H__ */

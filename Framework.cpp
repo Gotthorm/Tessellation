@@ -8,9 +8,9 @@
 #include "Input.h"
 #include <sstream>
 #include <iostream>
-#include "FollowCamera.h"
 #include "OpenGLInterface.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "CameraManager.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -24,7 +24,7 @@ const float kCameraOffsetDistance = 10.0f;
 const float kCameraFollowHeightAngle = glm::radians(20.0f);
 const float kCameraMinimumHeightAboveGround = 2.0f;
 
-Framework::Framework() : m_pInput( NULL ), m_OldFrameTime(0), m_OneSecondIntervalAccumulator(0), m_UpdateAccumulator(0), m_CurrentFPS(0), m_WindowHandleToDeviceContext(NULL), m_Camera(NULL)
+Framework::Framework() : m_pInput( NULL ), m_OldFrameTime(0), m_OneSecondIntervalAccumulator(0), m_UpdateAccumulator(0), m_CurrentFPS(0), m_WindowHandleToDeviceContext(NULL), m_CameraManager(NULL)
 {
 }
 
@@ -100,6 +100,8 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	// This must be called after we make our OpenGL rendering context above
 	OpenGLInterface::Initialize();
 
+	m_CameraManager = new CameraManager();
+
 	m_CameraPosition = m_PlayerPosition = glm::vec3();
 	m_PlayerRotationDegrees = 0.0f;
 
@@ -139,13 +141,13 @@ bool Framework::Init( HINSTANCE hInstance, HWND hWindow, const LaunchInfo& launc
 	// Initialize the 2D text system
 	m_Text2D.init( 128, 50 );
 	
-	glm::vec2 cameraOffset( 35, 15 );
+	glm::vec3 cameraOffset( 35, 15, 0 );
 
-	m_Camera = new FollowCamera( &m_Loki );
+	CameraManager::CameraId followCamera = m_CameraManager->AddCamera( CameraManager::FOLLOW, "Follow" );
 
-	m_Camera->SetPosition( m_PlayerPosition + glm::vec3( cameraOffset.x, cameraOffset.y, 0 ) );
-
-	m_Camera->SetOffset( cameraOffset );
+	m_CameraManager->SetCameraTarget( followCamera, &m_Loki );
+	m_CameraManager->SetCameraPosition( followCamera, m_PlayerPosition + glm::vec3( cameraOffset.x, cameraOffset.y, 0 ) );
+	m_CameraManager->SetCameraOffset( followCamera, cameraOffset );
 
 	return true;
 }
@@ -206,29 +208,25 @@ void Framework::Update()
 
 	UpdateAvatar( timeElapsed, avatarOrientation );
 
-	m_Camera->Update( timeElapsed );
-
-	UpdateCamera( timeElapsed, avatarOrientation );
+	m_CameraManager->Update( timeElapsed );
 
 	//static const GLfloat clearColor[] = { 0.34f, 0.34f, 0.9f, 1.0f };
 	static const GLfloat clearColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	static const GLfloat one = 1.0f;
 	//static bool wireframe = true;
 	//static bool enable_fog = true;
-	static bool enable_displacement = true;
+	//static bool enable_displacement = true;
 
-	glm::mat4 viewMatrix = glm::lookAt( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3(0,1,0) );
-	//glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, m_CameraPosition + m_CameraOrientation, glm::vec3( 0, -1, 0 ) );
-	//glm::mat4 viewMatrix = glm::lookAtLH( m_CameraPosition, glm::vec3( 0, 0, 0 ), glm::vec3( 0, -1, 0 ) );
-
-	glm::mat4 projectionMatrix = glm::perspective( 45.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
-	//glm::mat4 projectionMatrix = glm::perspectiveLH( 50.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
-
-	glViewport( 0, 0, windowWidth, windowHeight );
 	OpenGLInterface::ClearBufferfv( GL_COLOR, 0, clearColor );
 	OpenGLInterface::ClearBufferfv( GL_DEPTH, 0, &one );
 
-	viewMatrix = m_Camera->GetOrientation();
+	const Camera* currentCamera = m_CameraManager->GetCurrentCamera();
+
+	const glm::mat4& viewMatrix = currentCamera->GetOrientation();
+
+	glm::mat4 projectionMatrix = glm::perspective( 45.0f, (float)windowWidth / (float)windowHeight, 0.1f, 10000.0f );
+
+	glViewport( 0, 0, windowWidth, windowHeight );
 
 	m_Landscape.Render( projectionMatrix, viewMatrix );
 	m_Loki.Render( projectionMatrix, viewMatrix );
@@ -238,10 +236,13 @@ void Framework::Update()
 
 	char stringBuffer[256];
 
-	sprintf( stringBuffer, "FPS:%4u  Camera Mode: %s", m_CurrentFPS, "Free" );
+	sprintf( stringBuffer, "FPS:%4u  Camera Mode: %s", m_CurrentFPS, currentCamera->GetName().c_str() );
 	m_Text2D.drawText( stringBuffer, 0, 0 );
 
-	sprintf( stringBuffer, "Camera Position(%6.2f, %6.2f, %6.2f) Camera Orientation(%6.2f, %6.2f, %6.2f)", m_CameraPosition[ 0 ], m_CameraPosition[ 1 ], m_CameraPosition[ 2 ], m_CameraOrientation[ 0 ], m_CameraOrientation[ 1 ], m_CameraOrientation[ 2 ] );
+	glm::vec3 cameraPosition = currentCamera->GetPosition();
+	glm::vec3 cameraDirection = currentCamera->GetForwardDirection();
+
+	sprintf( stringBuffer, "Camera Position(%6.2f, %6.2f, %6.2f) Camera Direction(%6.2f, %6.2f, %6.2f)", cameraPosition[ 0 ], cameraPosition[ 1 ], cameraPosition[ 2 ], cameraDirection[ 0 ], cameraDirection[ 1 ], cameraDirection[ 2 ] );
 	m_Text2D.drawText( stringBuffer, 0, 1 );
 
 	sprintf( stringBuffer, "Avatar Position(%6.2f, %6.2f, %6.2f) Avatar Orientation(%6.2f, %6.2f, %6.2f)", m_PlayerPosition[ 0 ], m_PlayerPosition[ 1 ], m_PlayerPosition[ 2 ], m_PlayerOrientation[ 0 ], m_PlayerOrientation[ 1 ], m_PlayerOrientation[ 2 ] );
@@ -318,72 +319,72 @@ void Framework::UpdateAvatar( DWORD timeElapsed, glm::mat4& avatarOrientation )
 	m_PlayerOrientation = rotationMatrix * glm::vec4( 0, 0, 1, 1 );
 }
 
-void Framework::UpdateCamera( DWORD timeElapsed, const glm::mat4& avatarOrientation )
-{
-	// nTimeDelta is the number of milliseconds that has elapsed since the last frame
-	if (m_pInput != NULL)
-	{
-		float deltaTime = timeElapsed / 1000.0f;
-
-		if (m_pInput->GetKey(Input::KEY_MOUSE_RIGHT))
-		{
-			long deltaX;
-			long deltaY;
-			m_pInput->GetMouse(deltaX, deltaY);
-
-			//camera->ProcessMouseMovement((float)deltaX, (float)-deltaY);
-			m_CameraTargetPitch = (float)-deltaY;
-			m_CameraTargetYaw = (float)-deltaX;
-		}
-
-		const float mouseSpeed = 0.25f;
-
-		m_CameraCurrentYaw += (m_CameraTargetYaw * mouseSpeed);
-		m_CameraCurrentPitch -= (m_CameraTargetPitch * mouseSpeed);
-
-		m_CameraTargetPitch = m_CameraTargetYaw = 0.0f;
-
-		glm::mat4 theYawMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, 1.0, 0 ) );
-		glm::mat4 thePitchMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentPitch ), glm::vec3( 1.0, 0, 0 ) );
-		glm::vec4 theUpVector = thePitchMatrix * glm::vec4(0,1,0,1);
-		//glm::mat3 theYawMatrix = glm::mat3();
-		//glm::mat3 thePitchMatrix = glm::mat3();
-		//glm::vec3 theUpVector = glm::vec3(0,1,0);
-
-		glm::vec4 orientationVector = (theYawMatrix * thePitchMatrix) * glm::vec4(0,0,1,1);
-
-		m_CameraOrientation.x = orientationVector.x;
-		m_CameraOrientation.y = orientationVector.y;
-		m_CameraOrientation.z = orientationVector.z;
-
-		glm::vec3 rightVector = glm::cross( m_CameraOrientation, glm::vec3( theUpVector.x, theUpVector.y, theUpVector.z ) );
-
-		// 10 units per second
-		float MovementIncrement = 100.0f * (timeElapsed / 1000.0f);
-
-		if (m_pInput->GetKey(Input::KEY_W))
-		{
-			//camera->ProcessKeyboard(FORWARD, deltaTime);
-			m_CameraPosition = m_CameraPosition + (m_CameraOrientation * MovementIncrement);
-		}
-		else if (m_pInput->GetKey(Input::KEY_S))
-		{
-			//camera->ProcessKeyboard(BACKWARD, deltaTime);
-			m_CameraPosition = m_CameraPosition - (m_CameraOrientation * MovementIncrement);
-		}
-
-		if (m_pInput->GetKey(Input::KEY_A))
-		{
-			//camera->ProcessKeyboard(LEFT, deltaTime);
-			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
-		}
-		else if (m_pInput->GetKey(Input::KEY_D))
-		{
-			//camera->ProcessKeyboard(RIGHT, deltaTime);
-			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
-		}
-	}
-}
+//void Framework::UpdateCamera( DWORD timeElapsed, const glm::mat4& avatarOrientation )
+//{
+//	// nTimeDelta is the number of milliseconds that has elapsed since the last frame
+//	if (m_pInput != NULL)
+//	{
+//		float deltaTime = timeElapsed / 1000.0f;
+//
+//		if (m_pInput->GetKey(Input::KEY_MOUSE_RIGHT))
+//		{
+//			long deltaX;
+//			long deltaY;
+//			m_pInput->GetMouse(deltaX, deltaY);
+//
+//			//camera->ProcessMouseMovement((float)deltaX, (float)-deltaY);
+//			m_CameraTargetPitch = (float)-deltaY;
+//			m_CameraTargetYaw = (float)-deltaX;
+//		}
+//
+//		const float mouseSpeed = 0.25f;
+//
+//		m_CameraCurrentYaw += (m_CameraTargetYaw * mouseSpeed);
+//		m_CameraCurrentPitch -= (m_CameraTargetPitch * mouseSpeed);
+//
+//		m_CameraTargetPitch = m_CameraTargetYaw = 0.0f;
+//
+//		glm::mat4 theYawMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentYaw ), glm::vec3( 0, 1.0, 0 ) );
+//		glm::mat4 thePitchMatrix = glm::rotate( glm::mat4(), glm::radians( m_CameraCurrentPitch ), glm::vec3( 1.0, 0, 0 ) );
+//		glm::vec4 theUpVector = thePitchMatrix * glm::vec4(0,1,0,1);
+//		//glm::mat3 theYawMatrix = glm::mat3();
+//		//glm::mat3 thePitchMatrix = glm::mat3();
+//		//glm::vec3 theUpVector = glm::vec3(0,1,0);
+//
+//		glm::vec4 orientationVector = (theYawMatrix * thePitchMatrix) * glm::vec4(0,0,1,1);
+//
+//		m_CameraOrientation.x = orientationVector.x;
+//		m_CameraOrientation.y = orientationVector.y;
+//		m_CameraOrientation.z = orientationVector.z;
+//
+//		glm::vec3 rightVector = glm::cross( m_CameraOrientation, glm::vec3( theUpVector.x, theUpVector.y, theUpVector.z ) );
+//
+//		// 10 units per second
+//		float MovementIncrement = 100.0f * (timeElapsed / 1000.0f);
+//
+//		if (m_pInput->GetKey(Input::KEY_W))
+//		{
+//			//camera->ProcessKeyboard(FORWARD, deltaTime);
+//			m_CameraPosition = m_CameraPosition + (m_CameraOrientation * MovementIncrement);
+//		}
+//		else if (m_pInput->GetKey(Input::KEY_S))
+//		{
+//			//camera->ProcessKeyboard(BACKWARD, deltaTime);
+//			m_CameraPosition = m_CameraPosition - (m_CameraOrientation * MovementIncrement);
+//		}
+//
+//		if (m_pInput->GetKey(Input::KEY_A))
+//		{
+//			//camera->ProcessKeyboard(LEFT, deltaTime);
+//			m_CameraPosition = m_CameraPosition - (rightVector * MovementIncrement);
+//		}
+//		else if (m_pInput->GetKey(Input::KEY_D))
+//		{
+//			//camera->ProcessKeyboard(RIGHT, deltaTime);
+//			m_CameraPosition = m_CameraPosition + (rightVector * MovementIncrement);
+//		}
+//	}
+//}
 
 void Framework::Render()
 {

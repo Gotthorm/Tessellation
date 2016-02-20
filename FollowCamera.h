@@ -8,10 +8,10 @@
 class FollowCamera : public Camera
 {
 public:
-	FollowCamera( const Object* target );
+	FollowCamera( const std::string& name, const Object* target );
 	virtual ~FollowCamera();
 
-	virtual void FollowCamera::Update( DWORD timeElapsed );
+	void Update( DWORD timeElapsed );
 
 	void SetTarget( const Object* target ) { m_Target = target; }
 

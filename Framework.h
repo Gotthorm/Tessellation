@@ -11,6 +11,7 @@
 
 class Input;
 class FollowCamera;
+class CameraManager;
 
 class Framework
 {
@@ -89,7 +90,7 @@ private:
 	//GLuint tex_displacement;
 	GLuint tex_color;
 
-	FollowCamera* m_Camera;
+	CameraManager* m_CameraManager;
 };
 
 #endif // _FRAMEWORK_HPP_

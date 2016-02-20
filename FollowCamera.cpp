@@ -5,7 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/compatibility.hpp>
 
-FollowCamera::FollowCamera( const Object* target ) : m_Target( target ), m_TargetOffset( 0.0f )
+FollowCamera::FollowCamera( const std::string& name, const Object* target ) : Camera(name), m_Target( target ), m_TargetOffset( 0.0f )
 {
 }
 

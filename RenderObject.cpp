@@ -4,7 +4,7 @@
 #include "OpenGLInterface.h"
 #include "RenderObject.h"
 
-RenderObject::RenderObject() : m_DataBuffer(0), m_VertexArrayObject(0), m_ObjectCount(0), m_Initialized(false)
+RenderObject::RenderObject(const std::string& name) : Object(name), m_DataBuffer(0), m_VertexArrayObject(0), m_ObjectCount(0), m_Initialized(false)
 {
 }
 

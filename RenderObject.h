@@ -19,7 +19,7 @@ public:
     virtual void Destroy();
 
 protected:
-	RenderObject();
+	RenderObject(const std::string& name);
 	virtual ~RenderObject();
 
 	bool Initialize(const std::string& shaderName);
